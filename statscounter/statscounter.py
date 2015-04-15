@@ -80,3 +80,13 @@ class StatsCounter(Counter):
         """
         """
         return stats.pstdev(self.values())
+
+    def argmax(self):
+        """
+        """
+        return self.most_common(1)[0][0]
+
+    def max(self):
+        """
+        """
+        return self.most_common(1)[0][1]

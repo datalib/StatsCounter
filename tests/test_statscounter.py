@@ -45,3 +45,11 @@ class TestStatsCounter(TestCase):
     def test_pstdev(self, ):
         m = self.counter_ints.pstdev()
         assert m == 288.6749902572095
+
+    def test_argmax(self):
+        m = self.counter_ints.argmax()
+        assert m == '999'
+
+    def test_max(self):
+        m = self.counter_ints.max()
+        assert m == 999
