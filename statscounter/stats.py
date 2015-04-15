@@ -8,7 +8,8 @@ from __future__ import division
 
 import collections
 import math
-import inspect
+from inspect import isgenerator
+from itertools import chain
 
 from fractions import Fraction as F
 from decimal import Decimal as D
@@ -42,15 +43,14 @@ def _sum(data):
     Mixed types are currently treated as an error, except that int is
     allowed.
     """
-    if inspect.isgenerator(data):
+    if isgenerator(data):
         n = data.next()
+        data = chain([n], data)
     else:
         n = data[0]
-        data = data[1:]
 
     if isinstance(n, F):
         return math.fsum(data)
-
     else:
         return sum(data)
 
@@ -250,6 +250,7 @@ def _ss(data, c=None):
     """
     if c is None:
         c = mean(data)
+    #print(data)
     ss = _sum((x-c)**2 for x in data)
     # The following sum should mathematically equal zero, but due to rounding
     # error may not.

@@ -59,8 +59,8 @@ class TestStats(TestCase):
 
     def test_pvariance(self):
         m = pvariance(self.ints)
-        assert m == 8334166.666666667
+        assert m == 8333333.25
 
     def test_pstdev(self):
         m = pstdev(self.ints)
-        assert m == 2886.8956799071675
+        assert m == 2886.751331514372
