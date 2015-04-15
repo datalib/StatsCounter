@@ -1,15 +1,15 @@
-StatsCounter - A statistics-enabled Python container
+StatsCounter - Python's statistical Swiss Army knife
 ----------------------------------------------------
 
 ::
 
-       _____ __        __       ______                  __
+       _____ __        __       ______                  __           
       / ___// /_____ _/ /______/ ____/___  __  ______  / /____  _____
       \__ \/ __/ __ `/ __/ ___/ /   / __ \/ / / / __ \/ __/ _ \/ ___/
-     ___/ / /_/ /_/ / /_(__  ) /___/ /_/ / /_/ / / / / /_/  __/ /
-    /____/\__/\__,_/\__/____/\____/\____/\__,_/_/ /_/\__/\___/_/
-
-
+     ___/ / /_/ /_/ / /_(__  ) /___/ /_/ / /_/ / / / / /_/  __/ /    
+    /____/\__/\__,_/\__/____/\____/\____/\__,_/_/ /_/\__/\___/_/     
+                                                                     
+A statistics-powered Python container.
 
 
 Usage
@@ -36,10 +36,6 @@ As a histogram
     2.555555555555556
     >>> letter_freq.pstdev()    # population std. dev.
     1.5986105077709065
-    >>> letter_freq.max()       # the maximum value
-    6
-    >>> letter_freq.argmax()    # the argument yielding the maximum value
-    "f"
 
 As a utility
 ~~~~~~~~~~~~

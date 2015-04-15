@@ -34,7 +34,7 @@ class TestStatsCounter(TestCase):
         m = self.counter_ints.variance()
         assert m == 83416.66666666667
 
-    def test_stdev(self):
+    def test_stdev(self, ):
         m = self.counter_ints.stdev()
         assert m == 288.8194360957494
 

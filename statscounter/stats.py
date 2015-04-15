@@ -8,6 +8,7 @@ from __future__ import division
 
 import collections
 import math
+from inspect import isgenerator
 from itertools import chain
 
 from fractions import Fraction as F
@@ -42,11 +43,12 @@ def _sum(data):
     Mixed types are currently treated as an error, except that int is
     allowed.
     """
-    if hasattr(data, '__iter__'):
+    if isgenerator(data):
         n = data.next()
         data = chain([n], data)
     else:
         n = data[0]
+
     if isinstance(n, F):
         return math.fsum(data)
     else:
