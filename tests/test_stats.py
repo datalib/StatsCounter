@@ -5,20 +5,24 @@ from statscounter.stats import _sum, mean, median, median_low, \
             median_high, median_grouped, mode, \
             stdev, pstdev, variance, pvariance
 
+def frange(x, y, jump):
+    while x < y:
+        yield x
+        x += jump
 
 class TestStats(TestCase):
     def setUp(self):
         self.ints = list(range(10000))
-        self.floats = [3, 2.25, 4.5, -0.5, 1.0, 0.75]
+
+        self.floats = frange(0, 1, 0.001)
 
     def test_sum(self):
         i = _sum(self.ints)
         assert i == 49995000
-        assert _sum(self.ints, 2) == i + 2
 
         f = _sum(self.floats)
-        assert f == 11.0
-        assert _sum(self.floats, 0.75) == f + 0.75
+        assert f == 499.50000000000034
+
 
     def test_mean(self):
         m = mean(self.ints)
@@ -43,8 +47,8 @@ class TestStats(TestCase):
 
     def test_variance(self):
         m = variance(self.ints)
-        assert m == 8334769
+        assert m == 8334166.666666667
 
-    def test_stdev(self, ):
+    def test_stdev(self):
         m = stdev(self.ints)
-        assert m == 2887
+        assert m == 2886.8956799071675
