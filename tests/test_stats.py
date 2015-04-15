@@ -8,12 +8,12 @@ from statscounter.stats import _sum, mean, median, median_low, \
 
 class TestStats(TestCase):
     def setUp(self):
-        self.ints = [1, 2, 3, 4, 4, 6]
+        self.ints = list(range(10000))
         self.floats = [3, 2.25, 4.5, -0.5, 1.0, 0.75]
 
     def test_sum(self):
         i = _sum(self.ints)
-        assert i == 20
+        assert i == 49995000
         assert _sum(self.ints, 2) == i + 2
 
         f = _sum(self.floats)
@@ -22,29 +22,29 @@ class TestStats(TestCase):
 
     def test_mean(self):
         m = mean(self.ints)
-        d = (1+2+3+4+4+6)/6
+        d = (49995000)/10000
         assert m == d
 
     def test_median(self):
         m = median(self.ints)
-        assert m == 3.5
+        assert m == 4999.5
 
     def test_median_low(self):
         m = median_low(self.ints)
-        assert m == 3
+        assert m == 4999
 
     def test_median_high(self, ):
         m = median_high(self.ints)
-        assert m == 4
+        assert m == 5000
 
     def test_median_grouped(self, ):
         m = median_grouped(self.ints)
-        assert m == 3.5
+        assert m == 4999.5
 
     def test_variance(self):
         m = variance(self.ints)
-        assert m == 3.066666666666667
+        assert m == 8334769
 
     def test_stdev(self, ):
         m = stdev(self.ints)
-        assert m == 1.7511900715418263
+        assert m == 2887
