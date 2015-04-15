@@ -209,20 +209,22 @@ def mode(data):
 
     >>> mode(["red", "blue", "blue", "red", "green", "red", "red"])
     'red'
-
-    If there is not exactly one most common value, ``mode`` will raise
-    StatisticsError.
     """
+
     # Generate a table of sorted (value, frequency) pairs.
-    table = _counts(data)
-    if len(table) == 1:
-        return table[0][0]
-    elif table:
-        raise StatisticsError(
-                'no unique mode; found %d equally common values' % len(table)
-                )
-    else:
+    hist = collections.Counter(data)
+    top = hist.most_common(2)
+
+    if len(top) == 1:
+        return top[0][0]
+    elif not top:
         raise StatisticsError('no mode for empty data')
+    elif top[0][1] == top[1][1]:
+        raise StatisticsError(
+            'no unique mode; found %d equally common values' % len(hist)
+            )
+    else:
+        return top[0][0]
 
 
 # === Measures of spread ===

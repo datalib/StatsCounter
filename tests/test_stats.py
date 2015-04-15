@@ -5,6 +5,7 @@ from statscounter.stats import _sum, mean, median, median_low, \
             median_high, median_grouped, mode, \
             stdev, pstdev, variance, pvariance
 
+
 def frange(x, y, jump):
     while x < y:
         yield x
@@ -23,7 +24,6 @@ class TestStats(TestCase):
         f = _sum(self.floats)
         assert f == 499.50000000000034
 
-
     def test_mean(self):
         m = mean(self.ints)
         d = (49995000)/10000
@@ -32,6 +32,10 @@ class TestStats(TestCase):
     def test_median(self):
         m = median(self.ints)
         assert m == 4999.5
+
+    def test_mode(self):
+        m = mode(self.ints + [1])
+        assert m == 1
 
     def test_median_low(self):
         m = median_low(self.ints)
@@ -51,4 +55,12 @@ class TestStats(TestCase):
 
     def test_stdev(self):
         m = stdev(self.ints)
+        assert m == 2886.8956799071675
+
+    def test_pvariance(self):
+        m = pvariance(self.ints)
+        assert m == 8334166.666666667
+
+    def test_pstdev(self):
+        m = pstdev(self.ints)
         assert m == 2886.8956799071675
