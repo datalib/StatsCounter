@@ -12,6 +12,10 @@ import math
 from fractions import Fraction
 from decimal import Decimal
 
+
+class StatisticsError(ValueError):
+    pass
+
 # === Private utilities === #
 
 def _sum(data, start=0):
