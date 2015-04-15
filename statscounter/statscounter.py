@@ -77,12 +77,17 @@ class StatsCounter(Counter):
         """
         return stats.pstdev(self.values())
 
+    def best_pair(self):
+        return self.most_common(1)[0]
+
     def argmax(self):
         """
         """
-        return self.most_common(1)[0][0]
+        key, _ = self.best_pair()
+        return key
 
     def max(self):
         """
         """
-        return self.most_common(1)[0][1]
+        _, value = self.best_pair()
+        return value
