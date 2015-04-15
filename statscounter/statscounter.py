@@ -30,7 +30,6 @@ class StatsCounter(Counter):
     def __init__(self,*args, **kwds):
         super(StatsCounter, self).__init__(*args, **kwds)
 
-
     def mean(self):
         """
         """
