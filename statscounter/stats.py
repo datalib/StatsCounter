@@ -8,7 +8,6 @@ from __future__ import division
 
 import collections
 import math
-from inspect import isgenerator
 from itertools import chain
 
 from fractions import Fraction as F
@@ -19,6 +18,12 @@ class StatisticsError(ValueError):
     pass
 
 # === Private utilities === #
+
+
+def _first(iterable):
+    for item in iterable:
+        return item
+
 
 def _sum(data):
     """_sum(data [, start]) -> value
@@ -43,16 +48,15 @@ def _sum(data):
     Mixed types are currently treated as an error, except that int is
     allowed.
     """
-    if isgenerator(data):
-        n = data.next()
-        data = chain([n], data)
-    else:
-        n = data[0]
+    data = iter(data)
+    n = _first(data)
 
-    if isinstance(n, F):
-        return math.fsum(data)
-    else:
+    if n is not None:
+        data = chain([n], data)
+        if isinstance(n, F):
+            return math.fsum(data)
         return sum(data)
+    return 0
 
 
 # === Measures of central tendency (averages) ===
@@ -99,7 +103,7 @@ def median(data):
     n = len(data)
     if n == 0:
         raise StatisticsError("no median for empty data")
-    if n%2 == 1:
+    if n % 2:
         return data[n//2]
     else:
         i = n//2

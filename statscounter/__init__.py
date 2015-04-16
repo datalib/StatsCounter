@@ -1,1 +1,1 @@
-from statscounter import StatsCounter
+from .statscounter import StatsCounter
