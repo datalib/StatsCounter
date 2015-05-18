@@ -1,13 +1,10 @@
 from __future__ import division
-
-from unittest import TestCase
-
+from pytest import raises
 from statscounter import StatsCounter, stats
 
-class TestStatsCounter(TestCase):
-    def setUp(self):
-        self.counter_ints = StatsCounter({str(s):s for s in range(1000)})
-        #self.counter_floats =
+
+class TestStatsCounter:
+    counter_ints = StatsCounter({str(s):s for s in range(1000)})
 
     def test_mean_int(self):
         m = self.counter_ints.mean()
@@ -27,8 +24,8 @@ class TestStatsCounter(TestCase):
         assert m == 499.5
 
     def test_mode(self):
-        m = self.counter_ints.mode
-        self.assertRaises(stats.StatisticsError, m)
+        with raises(stats.StatisticsError):
+            self.counter_ints.mode()
 
     def test_variance(self):
         m = self.counter_ints.variance()

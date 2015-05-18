@@ -1,6 +1,4 @@
 from __future__ import division
-from unittest import TestCase
-
 from statscounter.stats import _sum, mean, median, median_low, \
             median_high, median_grouped, mode, \
             stdev, pstdev, variance, pvariance
@@ -11,11 +9,10 @@ def frange(x, y, jump):
         yield x
         x += jump
 
-class TestStats(TestCase):
-    def setUp(self):
-        self.ints = list(range(10000))
 
-        self.floats = frange(0, 1, 0.001)
+class TestStats:
+    ints = list(range(10000))
+    floats = frange(0, 1, 0.001)
 
     def test_sum(self):
         i = _sum(self.ints)
