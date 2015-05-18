@@ -22,8 +22,10 @@ Rodrigo
 """
 
 from collections import Counter
-
-from statscounter import stats
+try:
+    import statistics as stats
+except ImportError:
+    import statscounter.stats as stats
 
 
 class StatsCounter(Counter):
