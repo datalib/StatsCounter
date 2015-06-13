@@ -90,3 +90,8 @@ class StatsCounter(Counter):
         """
         _, value = self.best_pair()
         return value
+
+    def pdist(self):
+        total = sum(self.values())
+        stats = {k: (v / float(total)) for k, v in self.items()}
+        return StatsCounter(stats)
