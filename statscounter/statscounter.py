@@ -113,7 +113,10 @@ class StatsCounter(Counter):
 		from bisect import bisect
 		from random import random
 		#http://stackoverflow.com/questions/4437250/choose-list-variable-given-probability-of-each-variable
-		P = list(self.pdist().items())
+		
+		total = sum(self.values())
+		
+		P = [(k, (v / float(total))) for k, v in self.items()]
 		
 		cdf = [P[0][1]]
 		for i in range(1, len(P)):
