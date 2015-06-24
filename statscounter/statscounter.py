@@ -132,3 +132,14 @@ class StatsCounter(Counter):
 			
 		return P[bisect(cdf, random())][0]
 		
+		
+	def transform(self, key):
+		"""
+		"""
+		dist = self
+		newdist = StatsCounter()
+		
+		for k, v in dist.items():
+			newdist[key(k, v)] += v
+		
+		return newdist
