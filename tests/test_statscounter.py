@@ -51,8 +51,8 @@ class TestStatsCounter:
 		m = self.counter_ints.max()
 		assert m == 999
 
-	def test_pdist(self):
-		pdist = StatsCounter({1: 1, 2: 2, 3: 1}).pdist()
+	def test_normalize(self):
+		pdist = StatsCounter({1: 1, 2: 2, 3: 1}).normalize()
 		assert pdist == {
 			1: 0.25,
 			2: 0.50,
