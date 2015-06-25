@@ -51,8 +51,8 @@ class TestStatsCounter:
 		m = self.counter_ints.max()
 		assert m == 999
 
-	def test_pdist(self):
-		pdist = StatsCounter({1: 1, 2: 2, 3: 1}).pdist()
+	def test_normalize(self):
+		pdist = StatsCounter({1: 1, 2: 2, 3: 1}).normalize()
 		assert pdist == {
 			1: 0.25,
 			2: 0.50,
@@ -62,3 +62,15 @@ class TestStatsCounter:
 	def test_get_weighted_random_value(self):
 		wrv = StatsCounter(a=10, b=3).get_weighted_random_value()
 		assert wrv == "a" or "b"
+		
+	def test_transform(self):
+		dist = StatsCounter({
+		    'of': 0.20, 
+		    'the': 0.50, 
+		    'that': 0.10, 
+		    'from': 0.20
+		})
+		
+		dist = dist.transform(lambda word, prob: word.startswith('t'))
+		
+		assert dist == StatsCounter({True: 0.6, False: 0.4})
