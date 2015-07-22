@@ -28,7 +28,7 @@ def readme():
 
 setup(
     name='statscounter',
-    version='0.0.010',
+    version='0.0.011',
     url='https://github.com/datalib/statscounter',
     license='MIT',
     description="Python's missing statistical Swiss Army knife",
