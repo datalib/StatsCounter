@@ -51,23 +51,37 @@ class StatsCounter(Counter):
 	def median(self, ):
 		"""
 		"""
-		return stats.median(self.elements())
-
+		try:
+			return stats.median(self.elements())
+		except (TypeError):
+			raise WrongVariableTypeError("Distribution is not a numerical type.")
+		
 	def median_low(self):
 		"""
 		"""
-		return stats.median_low(self.elements())
+		try:
+			return stats.median_low(self.elements())
+		except (TypeError):
+			raise WrongVariableTypeError("Distribution is not a numerical type.")
+		
 
 	def median_high(self):
 		"""
 		"""
-		return stats.median_high(self.elements())
+		try:
+			return stats.median_high(self.elements())
+		except (TypeError):
+			raise WrongVariableTypeError("Distribution is not a numerical type.")
+		
 
 	def median_grouped(self):
 		"""
 		"""
-		return stats.median_grouped(self.elements())
-
+		try:
+			return stats.median_grouped(self.elements())
+		except (TypeError):
+			raise WrongVariableTypeError("Distribution is not a numerical type.")
+		
 	def mode(self):
 		"""
 		"""
