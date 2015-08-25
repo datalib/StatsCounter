@@ -1,27 +1,27 @@
 from __future__ import division
 from pytest import raises
 from statscounter import StatsCounter, stats
-
+from statscounter.statscounter import MultipleMostCommonValuesError
 
 class TestStatsCounter:
-	counter_ints = StatsCounter({str(s):s for s in range(1000)})
+	counter_ints = StatsCounter([1,1,2,3,4,4])
 
 	def test_mean_int(self):
 		m = self.counter_ints.mean()
-		d = 499500/1000
+		d = 15/6
 		assert m == d
 
 	def test_median_low(self):
 		m = self.counter_ints.median_low()
-		assert m == 499
+		assert m == 2
 
 	def test_median_high(self, ):
 		m = self.counter_ints.median_high()
-		assert m == 500
+		assert m == 3
 
 	def test_median_grouped(self, ):
 		m = self.counter_ints.median_grouped()
-		assert m == 499.5
+		assert m == 2.5
 
 	def test_mode(self):
 		with raises(stats.StatisticsError):
@@ -29,28 +29,28 @@ class TestStatsCounter:
 
 	def test_variance(self):
 		m = self.counter_ints.variance()
-		assert m == 83416.66666666667
+		assert m == 1.9
 
 	def test_stdev(self, ):
 		m = self.counter_ints.stdev()
-		assert m == 288.8194360957494
+		assert m == 1.378404875209022
 
 	def test_pvariance(self):
 		m = self.counter_ints.pvariance()
-		assert m == 83333.25
+		assert m == 1.5833333333333333
 
 	def test_pstdev(self, ):
 		m = self.counter_ints.pstdev()
-		assert m == 288.6749902572095
+		assert m == 1.2583057392117916
 
 	def test_argmax(self):
-		m = self.counter_ints.argmax()
-		assert m == '999'
+		with raises(MultipleMostCommonValuesError):
+			m = self.counter_ints.argmax()
 
 	def test_max(self):
-		m = self.counter_ints.max()
-		assert m == 999
-
+		with raises(MultipleMostCommonValuesError):
+			m = self.counter_ints.max()
+		
 	def test_normalize(self):
 		pdist = StatsCounter({1: 1, 2: 2, 3: 1}).normalize()
 		assert pdist == {

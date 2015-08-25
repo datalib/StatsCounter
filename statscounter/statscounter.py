@@ -33,6 +33,10 @@ class WrongVariableTypeError(ValueError):
 	"""
 	pass
 
+class MultipleMostCommonValuesError(ValueError):
+	""""""
+	pass
+
 
 class StatsCounter(Counter):
 	def mean(self):
@@ -108,7 +112,11 @@ class StatsCounter(Counter):
 		return stats.pstdev(self.elements())
 
 	def best_pair(self):
-		return self.most_common(1)[0]
+		best_two_pairs = self.most_common(2)[0]
+		try:
+			self.mode()
+		except (stats.StatisticsError):
+			raise MultipleMostCommonValuesError("Two or more values appear more than once.")
 
 	def argmax(self):
 		"""
