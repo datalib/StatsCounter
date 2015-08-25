@@ -26,7 +26,7 @@ import statscounter.stats as stats
 
 
 class WrongVariableTypeError(ValueError):
-	"""You cannot find the 'expected value' (mean) of a distribution
+	"""You cannot find the 'expectation' (mean) of a distribution
 	of categorical (nominal) random variables (for example, a 
 	distribution of words is equivalent to a categorical variable).
 	It makes no sense to find the average word.
@@ -112,12 +112,13 @@ class StatsCounter(Counter):
 		return stats.pstdev(self.elements())
 
 	def best_pair(self):
-		best_two_pairs = self.most_common(2)[0]
 		try:
 			self.mode()
 		except (stats.StatisticsError):
 			raise MultipleMostCommonValuesError("Two or more values appear more than once.")
-
+		else:
+			return self.most_common(1)[0]
+		
 	def argmax(self):
 		"""
 		"""

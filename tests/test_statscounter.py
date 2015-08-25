@@ -4,52 +4,61 @@ from statscounter import StatsCounter, stats
 from statscounter.statscounter import MultipleMostCommonValuesError
 
 class TestStatsCounter:
-	counter_ints = StatsCounter([1,1,2,3,4,4])
+	counter_ints = StatsCounter([1,1,2,3,4])
+	counter_ints_with_two_modes = StatsCounter([1,1,2,3,4,4])
 
 	def test_mean_int(self):
-		m = self.counter_ints.mean()
+		m = self.counter_ints_with_two_modes.mean()
 		d = 15/6
 		assert m == d
 
 	def test_median_low(self):
-		m = self.counter_ints.median_low()
+		m = self.counter_ints_with_two_modes.median_low()
 		assert m == 2
 
 	def test_median_high(self, ):
-		m = self.counter_ints.median_high()
+		m = self.counter_ints_with_two_modes.median_high()
 		assert m == 3
 
 	def test_median_grouped(self, ):
-		m = self.counter_ints.median_grouped()
+		m = self.counter_ints_with_two_modes.median_grouped()
 		assert m == 2.5
 
 	def test_mode(self):
 		with raises(stats.StatisticsError):
-			self.counter_ints.mode()
+			self.counter_ints_with_two_modes.mode()
 
 	def test_variance(self):
-		m = self.counter_ints.variance()
+		m = self.counter_ints_with_two_modes.variance()
 		assert m == 1.9
 
 	def test_stdev(self, ):
-		m = self.counter_ints.stdev()
+		m = self.counter_ints_with_two_modes.stdev()
 		assert m == 1.378404875209022
 
 	def test_pvariance(self):
-		m = self.counter_ints.pvariance()
+		m = self.counter_ints_with_two_modes.pvariance()
 		assert m == 1.5833333333333333
 
 	def test_pstdev(self, ):
-		m = self.counter_ints.pstdev()
+		m = self.counter_ints_with_two_modes.pstdev()
 		assert m == 1.2583057392117916
-
+	
 	def test_argmax(self):
+		m = self.counter_ints.argmax()
+		assert m == 1
+		
+	def test_argmax_throws_exception(self):
 		with raises(MultipleMostCommonValuesError):
-			m = self.counter_ints.argmax()
+			m = self.counter_ints_with_two_modes.argmax()
 
 	def test_max(self):
+		m = self.counter_ints.max()
+		assert m == 2
+
+	def test_max_throws_exception(self):
 		with raises(MultipleMostCommonValuesError):
-			m = self.counter_ints.max()
+			m = self.counter_ints_with_two_modes.max()
 		
 	def test_normalize(self):
 		pdist = StatsCounter({1: 1, 2: 2, 3: 1}).normalize()
