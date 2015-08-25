@@ -6,25 +6,63 @@ from statscounter.statscounter import MultipleMostCommonValuesError
 class TestStatsCounter:
 	counter_ints = StatsCounter([1,1,2,3,4])
 	counter_ints_with_two_modes = StatsCounter([1,1,2,3,4,4])
-
-	def test_mean_int(self):
+	counter_chars = StatsCounter('aabccd')
+	
+	def test_key_types_distribution(self):
+		ci = self.counter_ints.key_types_distribution()
+		ci2 = self.counter_ints_with_two_modes.key_types_distribution()
+		cc = self.counter_chars.key_types_distribution()
+		
+		assert ci == StatsCounter(['int'])
+		assert ci2 == StatsCounter(['int'])
+		assert cc == StatsCounter(['str']) 
+		
+	def test_mean(self):
 		m = self.counter_ints_with_two_modes.mean()
 		d = 15/6
 		assert m == d
-
+	
+	def test_mean_throws_exception(self):
+		with raises(TypeError):
+			self.counter_chars.mean()
+	
+	def test_median(self):
+		m = self.counter_ints_with_two_modes.median()
+		assert m == 2.5
+		
+	def test_median_throws_exception(self):
+		with raises(TypeError):
+			self.counter_chars.median()
+		
 	def test_median_low(self):
 		m = self.counter_ints_with_two_modes.median_low()
-		assert m == 2
-
+		assert m == 2		
+	
+	def test_median_low_throws_exception(self):
+		with raises(TypeError):
+			self.counter_chars.median_low()
+	
 	def test_median_high(self, ):
 		m = self.counter_ints_with_two_modes.median_high()
 		assert m == 3
+		
+	def test_median_high_throws_exception(self):
+		with raises(TypeError):
+			self.counter_chars.median_high()
 
 	def test_median_grouped(self, ):
 		m = self.counter_ints_with_two_modes.median_grouped()
 		assert m == 2.5
-
-	def test_mode(self):
+		
+	def test_median_grouped_throws_exception(self):
+		with raises(TypeError):
+			self.counter_chars.median_grouped()	
+	
+	def test_mode(self, ):
+		m = self.counter_ints.mode()
+		assert m == 1
+		
+	def test_mode_throws_exception(self):
 		with raises(stats.StatisticsError):
 			self.counter_ints_with_two_modes.mode()
 

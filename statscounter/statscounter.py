@@ -25,13 +25,8 @@ from collections import Counter
 import statscounter.stats as stats
 
 
-class WrongVariableTypeError(ValueError):
-	"""You cannot find the 'expectation' (mean) of a distribution
-	of categorical (nominal) random variables (for example, a 
-	distribution of words is equivalent to a categorical variable).
-	It makes no sense to find the average word.
-	"""
-	pass
+NUMBER_TYPES = set(['float', 'int', 'Decimal', 'Fraction'])
+
 
 class MultipleMostCommonValuesError(ValueError):
 	""""""
@@ -39,13 +34,19 @@ class MultipleMostCommonValuesError(ValueError):
 
 
 class StatsCounter(Counter):
+	
+	def key_types_distribution(self):
+		"""Return a p. distribution of the elements' types"""
+		return StatsCounter([type(element).__name__ 
+							 for element in self.elements()]).normalize()
+		
 	def mean(self):
 		""" AKA Expectation
 		"""
 		try:
 			return stats.mean(self.elements())
 		except (TypeError):
-			raise WrongVariableTypeError("Distribution is not a numerical type.")
+			raise TypeError("Distribution is not a numerical type.")
 		
 	def expectation(self):
 		"""
@@ -55,36 +56,39 @@ class StatsCounter(Counter):
 	def median(self, ):
 		"""
 		"""
-		try:
+		key_type = self.key_types_distribution().most_common(1)[0]
+		print(key_type)
+		if key_type[0] not in NUMBER_TYPES or key_type[1] != 1.0:
+			raise TypeError("Distribution is not a numerical type.")
+		else:
 			return stats.median(self.elements())
-		except (TypeError):
-			raise WrongVariableTypeError("Distribution is not a numerical type.")
 		
 	def median_low(self):
 		"""
 		"""
-		try:
+		key_type = self.key_types_distribution().most_common(1)[0]
+		if key_type[0] not in NUMBER_TYPES or key_type[1] != 1.0:
+			raise TypeError("Distribution is not a numerical type.")
+		else:
 			return stats.median_low(self.elements())
-		except (TypeError):
-			raise WrongVariableTypeError("Distribution is not a numerical type.")
-		
 
 	def median_high(self):
 		"""
 		"""
-		try:
+		key_type = self.key_types_distribution().most_common(1)[0]
+		if key_type[0] not in NUMBER_TYPES or key_type[1] != 1.0:
+			raise TypeError("Distribution is not a numerical type.")
+		else:
 			return stats.median_high(self.elements())
-		except (TypeError):
-			raise WrongVariableTypeError("Distribution is not a numerical type.")
 		
-
 	def median_grouped(self):
 		"""
 		"""
-		try:
+		key_type = self.key_types_distribution().most_common(1)[0]
+		if key_type[0] not in NUMBER_TYPES or key_type[1] != 1.0:
+			raise TypeError("Distribution is not a numerical type.")
+		else:	
 			return stats.median_grouped(self.elements())
-		except (TypeError):
-			raise WrongVariableTypeError("Distribution is not a numerical type.")
 		
 	def mode(self):
 		"""
